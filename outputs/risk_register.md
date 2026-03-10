@@ -1,80 +1,93 @@
 
-# ACME Corp Information Security Risk Register
+# ACME Corp Risk Register
 
 | Asset | Threat | Vulnerability | Likelihood | Impact | Risk Score | Risk Level | Relevant Annex A Control | Mitigation Recommendation |
-|-------|--------|---------------|------------|--------|------------|------------|--------------------------|--------------------------|
-| **Privileged Access Management Systems** | Privilege escalation attacks | PAM solution not fully deployed | 4 | 5 | 20 | **Critical** | A.8.2 Privileged Access Rights, A.5.15 Access Control | **Risk: Privilege escalation on Confidential/High assets -> A.8.2 Privileged Access Management -> Implement comprehensive PAM solution with session recording, credential vaulting, and just-in-time access provisioning across all critical systems.** |
-| **Customer Data Warehouse** | Insider threat data exfiltration | No data loss prevention (DLP) controls | 4 | 5 | 20 | **Critical** | A.8.10 Information Deletion, A.5.12 Classification of Information | **Risk: Insider exfiltration of Confidential customer data -> A.8.10 Information Deletion -> Deploy DLP solution with data classification, user activity monitoring, and outbound content inspection to prevent unauthorized data exfiltration.** |
-| **SaaS Analytics Platform** | Application security breach | Unpatched application vulnerabilities | 4 | 4 | 16 | **Critical** | A.8.25 Secure Development Life Cycle, A.8.27 Secure Coding Practices | **Risk: Unpatched application vulnerabilities exposing customer data -> A.8.25 Secure Development Life Cycle -> Implement SDLC with mandatory SAST/DAST testing, code review, and vulnerability scanning before deployment.** |
-| **SaaS Analytics Platform** | API security compromise | Insecure API authentication and authorization | 4 | 4 | 16 | **Critical** | A.8.2 Privileged Access Rights, A.8.3 Information Access Restriction, A.8.20 Networks Security | **Risk: Insecure API authentication exposing platform functionality -> A.8.3 Information Access Restriction -> Deploy API gateway with authentication, authorization, rate limiting, and input validation.** |
-| **Customer Data Warehouse** | Insider threat data exfiltration | Lack of separation of duties | 3 | 5 | 15 | **High** | A.5.3 Segregation of Duties, A.8.2 Privileged Access Rights | **Risk: Single administrator with broad access -> A.5.3 Segregation of Duties -> Implement role-based access control with separation of duties and require dual approval for privileged database operations.** |
-| **Customer Data Warehouse** | Insider threat data exfiltration | Insufficient database access controls beyond MFA | 3 | 5 | 15 | **High** | A.5.15 Access Control, A.8.2 Privileged Access Rights | **Risk: Database access beyond MFA insufficient -> A.5.15 Access Control -> Implement formal RBAC model with least privilege access and granular permission controls for all database accounts.** |
-| **Customer Data Warehouse** | Cloud infrastructure compromise | Cloud provider dependency without adequate security assessment | 3 | 5 | 15 | **High** | A.5.19 Information Security in Supplier Relationships, A.5.20 Addressing Information Security within Supplier Agreements | **Risk: Cloud provider security assessment not performed -> A.5.19 Information Security in Supplier Relationships -> Conduct formal cloud provider security assessment and include right-to-audit clause in contracts.** |
-| **Customer Data Warehouse** | Cloud infrastructure compromise | Cloud misconfiguration risk | 3 | 5 | 15 | **High** | A.8.9 Configuration Management, A.5.19 Information Security in Supplier Relationships | **Risk: Cloud misconfiguration risk -> A.8.9 Configuration Management -> Deploy cloud security posture management (CSPM) tool with automated configuration baselining and monitoring.** |
-| **Encrypted Backup Systems** | Ransomware infection of backups | No immutable or air-gapped backup protection | 3 | 5 | 15 | **High** | A.8.7 Protection Against Malware, A.8.13 Information Backup, A.8.14 Redundancy of Information Processing Facilities | **Risk: Ransomware infection of backups -> A.8.13 Information Backup -> Implement immutable backup storage with air-gapped copies and regular ransomware simulation testing.** |
-| **Privileged Access Management Systems** | Insider abuse of privileges | No just-in-time (JIT) access provisioning | 3 | 5 | 15 | **High** | A.8.2 Privileged Access Rights, A.8.3 Information Access Restriction | **Risk: Standing privileged access without JIT -> A.8.2 Privileged Access Rights -> Implement just-in-time access provisioning with automatic session timeout and approval workflow.** |
-| **Privileged Access Management Systems** | Credential theft or compromise | Weak privileged credential management | 3 | 5 | 15 | **High** | A.8.5 Secure Authentication, A.8.24 Use of Cryptography | **Risk: Privileged credential theft -> A.8.5 Secure Authentication -> Deploy privileged credential vaulting with automatic rotation and multi-factor authentication for all privileged accounts.** |
-| **Privileged Access Management Systems** | No privileged access certification or recertification | No privileged access certification or recertification | 3 | 5 | 15 | **High** | A.5.15 Access Control, A.8.2 Privileged Access Rights | **Risk: Privileged access accumulation -> A.5.15 Access Control -> Implement quarterly access certification process with automated attestation and periodic access reviews.** |
-| **SaaS Analytics Platform** | Supply chain compromise | Third-party component vulnerabilities | 3 | 4 | 12 | **High** | A.5.21 Managing Information Security in the ICT Supply Chain, A.8.8 Management of Technical Vulnerabilities | **Risk: Third-party library vulnerabilities -> A.5.21 Managing Information Security in the ICT Supply Chain -> Implement software composition analysis (SCA) with SBOM generation and vendor vulnerability monitoring.** |
-| **Customer Data Warehouse** | Unauthorized database access | Insufficient database access controls beyond MFA | 3 | 4 | 12 | **High** | A.5.15 Access Control, A.8.2 Privileged Access Rights, A.8.3 Information Access Restriction | **Risk: Unauthorized database access -> A.5.15 Access Control -> Complete Access Control Policy implementation with formal RBAC and regular access reviews.** |
-| **Customer Data Warehouse** | Unauthorized database access | No database activity monitoring or audit logging | 3 | 4 | 12 | **High** | A.8.15 Logging, A.8.16 Monitoring Activities, A.12.4 Logging and Monitoring | **Risk: Unauthorized database access undetected -> A.8.15 Logging -> Implement database activity monitoring with audit trails, alerting, and log retention policies.** |
-| **Customer Data Warehouse** | Data corruption / malicious modification | Incomplete database patching and vulnerability management | 3 | 4 | 12 | **High** | A.8.8 Management of Technical Vulnerabilities, A.8.9 Configuration Management | **Risk: Database vulnerabilities unpatched -> A.8.8 Management of Technical Vulnerabilities -> Establish vulnerability management program with database-specific scanning and patching SLAs.** |
-| **SaaS Analytics Platform** | Denial of Service attacks | No web application firewall (WAF) or DDoS protection | 3 | 4 | 12 | **High** | A.8.20 Networks Security, A.8.22 Segregation of Networks, A.5.7 Threat Intelligence | **Risk: SaaS platform unavailability -> A.8.20 Networks Security -> Deploy WAF with DDoS protection and application-layer security controls.** |
-| **Company-Issued Encrypted Laptops** | Malware infection | No endpoint detection and response (EDR) solution documented | 4 | 3 | 12 | **High** | A.8.7 Protection Against Malware, A.8.19 Installation of Software on Operational Systems | **Risk: Laptop malware infection -> A.8.7 Protection Against Malware -> Implement EDR solution with behavioral analysis and automated response capabilities.** |
-| **Company-Issued Encrypted Laptops** | Malware infection | Insufficient security awareness for remote workers | 4 | 3 | 12 | **High** | A.6.3 Information Security Awareness, Education and Training, A.7.10 Acceptable Use of Information and Other Associated Assets | **Risk: Remote worker phishing -> A.6.3 Information Security Awareness -> Develop comprehensive security awareness training program with phishing simulations and remote work security guidance.** |
-| **VPN/Zero-Trust Remote Access Systems** | VPN credential theft | No VPN session monitoring or anomaly detection | 3 | 4 | 12 | **High** | A.8.15 Logging, A.8.16 Monitoring Activities | **Risk: VPN credential theft undetected -> A.8.15 Logging -> Implement VPN session monitoring with behavioral analytics and anomaly detection.** |
-| **VPN/Zero-Trust Remote Access Systems** | VPN credential theft | Weak or default authentication configurations | 3 | 4 | 12 | **High** | A.8.5 Secure Authentication, A.5.15 Access Control | **Risk: VPN credential theft -> A.8.5 Secure Authentication -> Implement formal authentication policy with password complexity and MFA enforcement for VPN access.** |
-| **Encrypted Backup Systems** | Backup corruption or failure | Insufficient backup frequency and coverage | 3 | 4 | 12 | **High** | A.8.13 Information Backup, A.5.29 Information Security During Disruption | **Risk: Backup corruption -> A.8.13 Information Backup -> Complete Backup Policy with defined RPO/RTO and automated backup verification.** |
-| **Encrypted Backup Systems** | Backup corruption or failure | No automated backup success verification | 3 | 4 | 12 | **High** | A.8.13 Information Backup, A.8.16 Monitoring Activities | **Risk: Backup failures undetected -> A.8.16 Monitoring Activities -> Implement automated backup monitoring with alerts and verification reporting.** |
-| **Network Segmentation Controls** | Lateral movement attacks | Segmentation rules not formally documented or baselined | 3 | 4 | 12 | **High** | A.8.9 Configuration Management, A.8.20 Networks Security, A.8.22 Segregation of Networks | **Risk: Undocumented segmentation rules -> A.8.9 Configuration Management -> Document network segmentation baseline with regular validation and testing.** |
-| **Network Segmentation Controls** | Lateral movement attacks | Insufficient east-west traffic monitoring | 3 | 4 | 12 | **High** | A.8.16 Monitoring Activities, A.8.20 Networks Security | **Risk: Lateral movement undetected -> A.8.16 Monitoring Activities -> Implement internal network traffic analysis with lateral movement detection.** |
-| **Network Segmentation Controls** | Lateral movement attacks | No network access control (NAC) for endpoint compliance | 3 | 4 | 12 | **High** | A.8.1 User Endpoint Devices, A.8.20 Networks Security | **Risk: Non-compliant device access -> A.8.1 User Endpoint Devices -> Deploy NAC solution with device compliance checking before network access.** |
-| **Secure Cloud Infrastructure** | Cloud provider security incident | Cloud provider security assessment not performed | 3 | 5 | 15 | **High** | A.5.19 Information Security in Supplier Relationships, A.5.20 Addressing Information Security within Supplier Agreements | **Risk: Cloud provider incident -> A.5.19 Information Security in Supplier Relationships -> Conduct cloud provider security assessment and establish incident response procedures.** |
-| **Secure Cloud Infrastructure** | Identity and access compromise | Inadequate cloud identity and access management | 3 | 5 | 15 | **High** | A.5.15 Access Control, A.8.2 Privileged Access Rights, A.8.5 Secure Authentication | **Risk: Cloud IAM compromise -> A.5.15 Access Control -> Implement cloud-specific IAM policies with access reviews and MFA enforcement.** |
-| **Multi-Factor Authentication (MFA) Implementation** | MFA bypass techniques | MFA not enforced for all systems and users | 3 | 4 | 12 | **High** | A.8.5 Secure Authentication, A.5.15 Access Control | **Risk: MFA bypass on unprotected systems -> A.8.5 Secure Authentication -> Extend MFA coverage to all systems with service account enforcement.** |
-| **Multi-Factor Authentication (MFA) Implementation** | MFA bypass techniques | MFA phishing resistance not verified | 3 | 4 | 12 | **High** | A.8.5 Secure Authentication, A.8.24 Use of Cryptography | **Risk: MFA phishing bypass -> A.8.5 Secure Authentication -> Implement phishing-resistant MFA with number matching and FIDO2 support.** |
+|-------|--------|---------------|------------|---------|------------|------------|-------------------------|--------------------------|
+| **Customer Data Warehouse** | Unauthorized Database Access | Weak Access Control Configuration | Medium | High | 6 | Medium | A.8.2 Access Control | Risk: Unauthorized database access -> A.8.2 Access Control -> Implement RBAC and privileged access monitoring to prevent misconfigured permissions and ensure least privilege. |
+| **Customer Data Warehouse** | Unauthorized Database Access | SQL Injection Vulnerabilities | Medium | High | 6 | Medium | A.8.23 Secure Development Lifecycle | Risk: Unauthorized database access -> A.8.23 Secure Development Lifecycle -> Implement input validation, parameterized queries, and secure coding practices to prevent SQL injection attacks. |
+| **Customer Data Warehouse** | Ransomware Attack | Cloud Security Misconfiguration | High | High | 9 | High | A.8.12 Data Leakage Prevention | Risk: Ransomware attack -> A.8.12 Data Leakage Prevention -> Implement cloud security monitoring, proper encryption, and backup validation to prevent ransomware encryption of customer data. |
+| **Customer Data Warehouse** | Cloud Infrastructure Compromise | Cloud Security Misconfiguration | Medium | High | 6 | Medium | A.8.12 Data Leakage Prevention | Risk: Cloud infrastructure compromise -> A.8.12 Data Leakage Prevention -> Implement cloud security posture management, proper IAM policies, and encryption at rest to prevent unauthorized access. |
+| **Customer Data Warehouse** | Insider Threat | Weak Access Control Configuration | Medium | High | 6 | Medium | A.8.2 Access Control | Risk: Insider threat -> A.8.2 Access Control -> Implement user activity monitoring, privileged access management, and separation of duties to mitigate insider risks from human resource security gaps. |
+| **Customer Data Warehouse** | Backup Media Loss | Backup Media Physical Security | Low | High | 3 | Low | A.8.2 Access Control | Risk: Backup media loss -> A.8.2 Access Control -> Implement secure backup media storage, access controls, and tracking procedures to prevent loss/theft of backup media (existing risk register entry). |
+| **Employee Laptops** | Device Theft/Loss | Physical Security Gaps | Medium | Medium | 4 | Medium | A.8.2 Access Control | Risk: Device theft/loss -> A.8.2 Access Control -> Implement device tracking, remote wipe capabilities, and enhanced physical security measures for endpoint security management. |
+| **Employee Laptops** | Malware Infection | Inadequate Endpoint Protection | High | Medium | 6 | Medium | A.8.2 Access Control | Risk: Malware infection -> A.8.2 Access Control -> Implement endpoint detection and response, application whitelisting, and regular patching to address evolving cyber threat landscape. |
+| **Employee Laptops** | Unauthorized Access | Device Encryption Weakness | Medium | Medium | 4 | Medium | A.8.2 Access Control | Risk: Unauthorized access -> A.8.2 Access Control -> Implement consistent encryption, centralized encryption policy, and proper key management for MDM-managed devices. |
+| **VPN/Zero-Trust Remote Access Infrastructure** | VPN Configuration Weakness | VPN Configuration Weaknesses | Medium | High | 6 | Medium | A.8.2 Access Control | Risk: VPN configuration weakness -> A.8.2 Access Control -> Implement proper VPN configuration, network segmentation, and authentication mechanisms to address VPN/zero-trust implementation gaps. |
+| **VPN/Zero-Trust Remote Access Infrastructure** | Man-in-the-Middle Attack | Zero-Trust Implementation Gaps | Medium | High | 6 | Medium | A.8.2 Access Control | Risk: Man-in-the-middle attack -> A.8.2 Access Control -> Implement zero-trust architecture, continuous authentication, and encrypted communication channels to prevent traffic interception. |
+| **VPN/Zero-Trust Remote Access Infrastructure** | Authentication Bypass | Zero-Trust Implementation Gaps | High | High | 9 | High | A.8.2 Access Control | Risk: Authentication bypass -> A.8.2 Access Control -> Implement multi-factor authentication, session management, and continuous monitoring to address authentication vulnerabilities in remote access infrastructure. |
+| **MDM (Mobile Device Management) System** | MDM Server Compromise | MDM Server Vulnerabilities | Medium | Medium | 4 | Medium | A.8.2 Access Control | Risk: MDM server compromise -> A.8.2 Access Control -> Implement MDM server hardening, regular patching, and access controls to prevent unauthorized control of managed devices. |
+| **MDM (Mobile Device Management) System** | Policy Misconfiguration | Policy Enforcement Gaps | Medium | Medium | 4 | Medium | A.8.2 Access Control | Risk: Policy misconfiguration -> A.8.2 Access Control -> Implement real-time monitoring, automated compliance checking, and policy validation for consistent MDM policy enforcement. |
+| **Cloud Hosting Environment** | Cloud Provider Breach | Cloud Service Misconfigurations | Medium | High | 6 | Medium | A.8.12 Data Leakage Prevention | Risk: Cloud provider breach -> A.8.12 Data Leakage Prevention -> Implement cloud security monitoring, proper IAM policies, and encryption to address cloud service provider dependencies. |
+| **Cloud Hosting Environment** | Misconfiguration Exposure | Cloud Service Misconfigurations | High | High | 9 | High | A.8.12 Data Leakage Prevention | Risk: Misconfiguration exposure -> A.8.12 Data Leakage Prevention -> Implement cloud security posture management, automated scanning, and proper configuration management to prevent public exposure of customer data. |
+| **Cloud Hosting Environment** | Supply Chain Compromise | Identity and Access Management Gaps | Medium | High | 6 | Medium | A.8.2 Access Control | Risk: Supply chain compromise -> A.8.2 Access Control -> Implement MFA, privileged access management, and proper IAM policies to prevent unauthorized access through compromised supply chain components. |
+| **Customer Analytics Platform** | Application Layer Attack | Application Layer Vulnerabilities | High | High | 9 | High | A.8.23 Secure Development Lifecycle | Risk: Application layer attack -> A.8.23 Secure Development Lifecycle -> Implement secure coding practices, regular vulnerability scanning, and web application firewalls to address evolving cyber threats targeting analytics platforms. |
+| **Customer Analytics Platform** | Data Exfiltration | Data Processing Vulnerabilities | Medium | High | 6 | Medium | A.8.12 Data Leakage Prevention | Risk: Data exfiltration -> A.8.12 Data Leakage Prevention -> Implement data classification, DLP controls, and monitoring to prevent unauthorized extraction of confidential customer data. |
+| **Customer Analytics Platform** | Denial of Service Attack | Authentication and Authorization Weaknesses | Medium | Medium | 4 | Medium | A.8.2 Access Control | Risk: Denial of service attack -> A.8.2 Access Control -> Implement rate limiting, DDoS protection, and proper session management to prevent service disruption for customer analytics platform. |
+| **Encrypted Backup Systems** | Backup Encryption Bypass | Backup Encryption Implementation Gaps | Low | High | 3 | Low | A.8.12 Data Leakage Prevention | Risk: Backup encryption bypass -> A.8.12 Data Leakage Prevention -> Implement strong encryption algorithms, proper key management, and regular encryption validation to protect backup systems. |
+| **Encrypted Backup Systems** | Backup System Compromise | Backup System Vulnerabilities | Medium | High | 6 | Medium | A.8.2 Access Control | Risk: Backup system compromise -> A.8.2 Access Control -> Implement backup system hardening, regular patching, and access controls to prevent unauthorized access to backed-up data. |
+| **Encrypted Backup Systems** | Recovery Testing Failure | Recovery Testing Failures | Low | Medium | 2 | Low | A.8.13 Information Security Incident Management | Risk: Recovery testing failure -> A.8.13 Information Security Incident Management -> Implement comprehensive testing procedures, detailed documentation, and validation processes to ensure backup recovery effectiveness. |
+| **Third-Party Software Libraries and Development Tools** | Vulnerable Library Usage | Vulnerable Library Dependencies | High | Medium | 6 | Medium | A.8.23 Secure Development Lifecycle | Risk: Vulnerable library usage -> A.8.23 Secure Development Lifecycle -> Implement SBOM management, dependency scanning, and regular updates to address supply chain security risks. |
+| **Third-Party Software Libraries and Development Tools** | Malicious Code Injection | Supply Chain Attack Risks | Medium | Medium | 4 | Medium | A.8.13 Supplier Security Management | Risk: Malicious code injection -> A.8.13 Supplier Security Management -> Implement vendor security assessments, secure coding practices, and monitoring to prevent compromised development tools. |
+| **Third-Party Software Libraries and Development Tools** | Vendor Security Breach | Software Composition Analysis Gaps | Medium | Medium | 4 | Medium | A.8.23 Secure Development Lifecycle | Risk: Vendor security breach -> A.8.23 Secure Development Lifecycle -> Implement software composition analysis, vulnerability assessment, and dependency monitoring to detect compromised third-party components. |
+| **Incident Response Systems** | Incident Response Failure | Incident Detection Gaps | High | High | 9 | High | A.8.7 Threat Intelligence | Risk: Incident response failure -> A.8.7 Threat Intelligence -> Implement real-time monitoring, alert correlation, and threat intelligence integration to address incomplete ISMS implementation gaps. |
+| **Incident Response Systems** | Alert Fatigue/Overload | Response Process Inefficiencies | Medium | Medium | 4 | Medium | A.8.13 Information Security Incident Management | Risk: Alert fatigue/overload -> A.8.13 Information Security Incident Management -> Implement alert prioritization, automated triage, and documented procedures to prevent missed incident detection. |
+| **Change Management System** | Unauthorized Change Implementation | Unauthorized Change Implementation | High | Medium | 6 | Medium | A.8.1 Operational Planning and Acquisition | Risk: Unauthorized change implementation -> A.8.1 Operational Planning and Acquisition -> Implement strict approval workflows, change review processes, and testing requirements to prevent unauthorized changes. |
+| **Change Management System** | Change Process Bypass | Change Process Bypass Risks | Medium | Medium | 4 | Medium | A.8.1 Operational Planning and Acquisition | Risk: Change process bypass -> A.8.1 Operational Planning and Acquisition -> Implement enforcement mechanisms, monitoring, and consequences for bypassing change management procedures. |
+| **Business Continuity Systems** | Recovery Site Failure | Recovery Site Infrastructure Issues | Low | High | 3 | Low | A.8.14 Business Continuity Management | Risk: Recovery site failure -> A.8.14 Business Continuity Management -> Implement proper recovery site preparation, infrastructure testing, and capacity planning to ensure disaster recovery capability. |
+| **Business Continuity Systems** | Recovery Plan Failure | Recovery Plan Documentation Gaps | Medium | High | 6 | Medium | A.8.14 Business Continuity Management | Risk: Recovery plan failure -> A.8.14 Business Continuity Management -> Implement detailed procedures, regular testing, and maintenance processes to address incomplete ISMS implementation gaps. |
+| **Internal Audit Systems** | Audit Data Tampering | Audit Independence Issues | Medium | Medium | 4 | Medium | A.6.1 Information Security Roles and Responsibilities | Risk: Audit data tampering -> A.6.1 Information Security Roles and Responsibilities -> Implement audit independence, proper authority, and adequate resources to prevent audit manipulation. |
+| **Internal Audit Systems** | Inadequate Audit Coverage | Audit Planning Deficiencies | High | Medium | 6 | Medium | A.6.1 Information Security Roles and Responsibilities | Risk: Inadequate audit coverage -> A.6.1 Information Security Roles and Responsibilities -> Implement comprehensive audit scope, risk-based approach, and proper resource allocation to detect security gaps. |
 
-## Systemic Risk Treatment Recommendations
+## Top Risks Requiring Immediate Treatment
 
-### **Cross-Cutting Control Implementation**
+### High Risk (Score 9)
 
-**Risk: Incomplete supplier management -> A.5.19, A.5.20, A.5.21 -> Establish comprehensive supplier management process with security assessments, contractual requirements, and ongoing monitoring for all third-party providers.**
+1. **Customer Data Warehouse - Ransomware Attack**
+   - **Risk**: Ransomware attack -> A.8.12 Data Leakage Prevention -> Implement cloud security monitoring, proper encryption, and backup validation
+   - **Context**: Directly influenced by evolving cyber threat landscape and single point of failure architecture
+   - **Priority**: Immediate mitigation within 30 days
 
-**Risk: Incomplete change management -> A.8.32 -> Implement formal change management process with approval workflow, testing requirements, and rollback procedures for all system changes.**
+2. **VPN/Zero-Trust Remote Access Infrastructure - Authentication Bypass**
+   - **Risk**: Authentication bypass -> A.8.2 Access Control -> Implement MFA, session management, and continuous monitoring
+   - **Context**: High business importance and remote workforce requirements
+   - **Priority**: Immediate mitigation within 30 days
 
-**Risk: Incomplete incident response -> A.5.24, A.5.25, A.5.26 -> Enhance incident response process with detailed playbooks, communication procedures, and regular testing for all asset types.**
+3. **Customer Analytics Platform - Application Layer Attack**
+   - **Risk**: Application layer attack -> A.8.23 Secure Development Lifecycle -> Implement secure coding, vulnerability scanning, and WAF
+   - **Context**: Confidential classification and high-volume customer data handling
+   - **Priority**: Immediate mitigation within 30 days
 
-**Risk: Incomplete security awareness -> A.6.3 -> Develop security awareness program with training, phishing simulations, and security culture initiatives for all personnel.**
+4. **Incident Response Systems - Incident Response Failure**
+   - **Risk**: Incident response failure -> A.8.7 Threat Intelligence -> Implement real-time monitoring and threat intelligence
+   - **Context**: Incomplete ISMS implementation and high business importance
+   - **Priority**: Immediate mitigation within 30 days
 
-**Risk: Incomplete access control policy -> A.5.15, A.8.2, A.8.3 -> Complete Access Control Policy with formal RBAC, access reviews, and least privilege principles for all systems.**
+### Medium Risk (Score 6) - Priority Treatment
 
-**Risk: Incomplete cryptographic controls -> A.8.24 -> Establish Cryptographic Controls Policy with encryption standards, key management, and algorithm requirements for all encrypted data.**
+1. **Customer Data Warehouse - Unauthorized Database Access**
+   - **Risk**: Unauthorized database access -> A.8.2 Access Control -> Implement RBAC and privileged monitoring
+   - **Context**: Existing risk register entry and regulatory requirements
+   - **Priority**: Mitigation within 6 months
 
-**Risk: Incomplete configuration management -> A.8.9 -> Implement configuration management with baselining, change control, and regular compliance checking for all infrastructure.**
+2. **Customer Data Warehouse - Cloud Infrastructure Compromise**
+   - **Risk**: Cloud infrastructure compromise -> A.8.12 Data Leakage Prevention -> Implement cloud security posture management
+   - **Context**: Cloud service provider dependencies and shared responsibility
+   - **Priority**: Mitigation within 6 months
 
-**Risk: Incomplete business continuity -> A.5.29, A.5.30 -> Complete business continuity process with BIA, DR strategy, and regular testing for all critical assets.**
+3. **Employee Laptops - Malware Infection**
+   - **Risk**: Malware infection -> A.8.2 Access Control -> Implement EDR and application whitelisting
+   - **Context**: Evolving cyber threat landscape and endpoint security gaps
+   - **Priority**: Mitigation within 6 months
 
-**Risk: Incomplete legal obligations assessment -> A.5.31, A.5.33, A.5.35 -> Determine information security legal obligations and establish compliance monitoring for all regulatory requirements.**
+## Treatment Strategy Alignment
 
-**Risk: Incomplete HR security processes -> A.6.1, A.6.2, A.6.4, A.6.5 -> Implement HR security processes including screening, employment terms, disciplinary procedures, and confidentiality agreements.**
+The risk register aligns with ACME Corp's organizational context and existing risk assessment framework:
 
-## Treatment Priority Matrix
+- **Consistency with Existing Register**: Unauthorized database access (Medium likelihood, High impact) and backup media loss (Low likelihood, High impact) maintained as primary concerns
+- **Business Context Alignment**: High impact thresholds reflect "High" business importance of confidential customer data
+- **Regulatory Compliance**: High impact ratings address customer and regulatory expectations from Interested Parties table
+- **Process Gaps**: Incomplete ISMS implementation directly influences high-risk ratings for incident response and change management
+- **Remote Workforce**: VPN/zero-trust infrastructure risks appropriately rated based on distributed workforce requirements
+- **Supply Chain**: Third-party risks aligned with supply chain security risks and vendor management challenges
 
-| **Priority** | **Risk Level** | **Treatment Timeline** | **Responsible Party** | **Key Dependencies** |
-|--------------|----------------|------------------------|----------------------|---------------------|
-| **Immediate** | Critical (20-25) | Within 30 days | CISO/Executive Team | Budget approval, vendor selection |
-| **High** | High (15-19) | Within 90 days | Security Operations, IT Operations | Policy completion, tool procurement |
-| **Medium** | High (10-14) | Within 6 months | All departments | Process establishment, training |
-| **Low** | Medium (4-9) | Within 12 months | Business Units | Resource allocation, gradual implementation |
-
-## Risk Register Maintenance
-
-This risk register will be maintained as a living document with quarterly reviews and updates triggered by:
-- New asset acquisitions or decommissions
-- Security incident occurrence
-- Control implementation completion
-- Regulatory requirement changes
-- Business process modifications
-- Threat landscape evolution
-
-Each risk entry includes traceability to the system_context through the asset classification, existing controls, and organizational context documented throughout the ACME Corp ISMS implementation framework.
+This comprehensive risk register provides actionable intelligence for prioritizing security investments and ensuring effective risk treatment based on ISO 27005 methodology.
