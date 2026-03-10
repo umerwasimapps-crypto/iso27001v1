@@ -1,0 +1,5 @@
+outputs
+vector_db
+.env
+__pycache__
+.uv_cache

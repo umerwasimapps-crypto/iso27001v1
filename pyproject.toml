@@ -1,0 +1,51 @@
+[project]
+name = "iso27001"
+version = "0.1.0"
+description = "iso27001 using crewAI"
+authors = [
+    { name = "Your Name", email = "you@example.com" }
+]
+requires-python = ">=3.10,<3.14"
+
+dependencies = [
+    "crewai==1.9.3",
+    "onnxruntime==1.17.3 ; sys_platform == 'darwin' and platform_machine == 'x86_64'",
+    "chromadb>=0.5.0",
+    "openai>=1.35.0",
+    "sentence-transformers>=2.6.0",
+    "numpy<2.0",
+    "fastapi>=0.110.0",
+    "uvicorn>=0.29.0"
+]
+
+[project.scripts]
+iso27001 = "iso27001.main:run"
+run_crew = "iso27001.main:run"
+train = "iso27001.main:train"
+replay = "iso27001.main:replay"
+test = "iso27001.main:test"
+run_with_trigger = "iso27001.main:run_with_trigger"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
+
+[tool.uv]
+required-environments = [
+    "sys_platform == 'darwin' and platform_machine == 'x86_64'"
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/iso27001"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "src/iso27001",
+    "pyproject.toml",
+    "README.md",
+    "knowledge_base",
+    "memory",
+]

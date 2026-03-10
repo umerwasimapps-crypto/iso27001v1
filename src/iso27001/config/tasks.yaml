@@ -1,0 +1,331 @@
+determine_context_task:
+  description: >
+    Analyze the readiness_table plus any provided organization description,
+    business processes, and infrastructure notes to determine {organization_name}'s
+    internal and external issues. Explain how these factors influence the ISMS
+    and ISO 27001 certification strategy. Reference the shared system_context
+    memory for existing assets, risks, policies, and treatment plans.
+    Readiness table:
+    {readiness_table}
+    Organization description: {organization_description}
+    Business processes: {business_processes}
+    Infrastructure notes: {infrastructure_notes}
+    System context: {system_context}
+  expected_output: >
+    A Markdown section titled "Organizational Context" with subsections for
+    Internal Issues and External Issues, each containing bullet lists that cite
+    specific details from the provided inputs.
+  agent: iso27001_consultant_agent
+
+identify_interested_parties_task:
+  description: >
+    Identify and categorize stakeholders who have expectations of the ISMS.
+    Include regulators, customers, internal teams, suppliers, and other
+    interested parties implied by the readiness_table.
+    Readiness table:
+    {readiness_table}
+    Organization description: {organization_description}
+    Business processes: {business_processes}
+    System context: {system_context}
+  expected_output: >
+    A Markdown table with the columns "Interested Party", "Needs/Expectations",
+    and "Relevant Clauses" followed by a short narrative on stakeholder
+    communication priorities.
+  agent: iso27001_consultant_agent
+
+define_scope_task:
+  description: >
+    Define the ISMS certification scope by combining the business processes,
+    systems, infrastructure, and readiness checklist data. Highlight inclusions,
+    exclusions, and dependencies.
+    Readiness table:
+    {readiness_table}
+    Organization description: {organization_description}
+    Business processes: {business_processes}
+    Infrastructure notes: {infrastructure_notes}
+    System context: {system_context}
+  expected_output: >
+    A concise ISMS scope statement plus a bulleted list of scope boundaries and
+    assumptions.
+  agent: iso27001_consultant_agent
+
+establish_processes_task:
+  description: >
+    Map out the interacting management system processes required for ISO 27001.
+    Reference governance, risk, operations, supplier, HR, and incident processes
+    present in the readiness_table and flag any missing elements.
+    Readiness table:
+    {readiness_table}
+    System context: {system_context}
+  expected_output: >
+    A process map description (textual) plus a checklist of required procedures
+    indicating whether each is described in the readiness_table and what needs to
+    be improved.
+  agent: iso27001_consultant_agent
+
+identify_information_assets_task:
+  description: >
+    Compile a comprehensive list of information assets referenced in the
+    readiness_table, systems list, infrastructure details, cloud platforms,
+    databases, and applications. Use system_context.asset_register entries as
+    seed data, capturing business processes each asset supports and whether it
+    contains sensitive data.
+  expected_output: >
+    A Markdown table with the columns "Asset Name", "Asset Type", "Business
+    Process", and "Notes" summarizing evidence and sensitivity.
+  agent: asset_inventory_agent
+
+identify_supporting_assets_task:
+  description: >
+    Identify supporting assets (infrastructure, tooling, third-party services)
+    that enable the primary information assets. Use system_context.asset_register
+    as a baseline and note hosting locations and any
+    cloud providers involved.
+  expected_output: >
+    A table listing "Supporting Asset", "Owner", "Location", "Dependency".
+  agent: asset_inventory_agent
+
+assign_asset_owners_task:
+  description: >
+    Assign accountable owners for each asset and align them with roles or
+    departments mentioned in the inputs or system_context.asset_register. Highlight any ownership gaps that need
+    governance attention.
+  expected_output: >
+    A table with "Asset Name", "Owner", "Role/Department", and "Escalation"
+    columns plus a short paragraph summarizing gaps.
+  agent: asset_inventory_agent
+
+classify_assets_task:
+  description: >
+    Classify each asset according to ISO 27001 guidelines, providing
+    confidentiality, integrity, availability ratings, and overall business
+    importance. Reference the Information Asset Register fields and enrich
+    entries using system_context.asset_register if values exist.
+  expected_output: >
+    A Markdown table with columns: "Asset Name", "Classification", "Confidentiality",
+    "Integrity", "Availability", "Business Importance". Include a final note
+    describing how the register should be maintained.
+  agent: asset_inventory_agent
+  output_file: outputs/asset_register.md
+
+define_risk_assessment_criteria_task:
+  description: >
+    Establish the qualitative and/or quantitative criteria that will be used to
+    assess likelihood, impact, and risk levels. Reference ISO 27005 guidance and
+    align the criteria with business priorities and regulatory expectations, and
+    verify consistency with the system_context.risk_register entries.
+  expected_output: >
+    A short narrative plus a table defining likelihood and impact scales, risk
+    score calculation, and thresholds for Low/Medium/High risk levels.
+  agent: risk_assessment_agent
+
+identify_threats_task:
+  description: >
+    Review the asset register, business processes, and threat intelligence to
+    identify relevant threat scenarios for each critical asset. Include both
+    intentional and accidental events, grounding your analysis in
+    system_context.risk_register where applicable.
+  expected_output: >
+    A table with "Asset", "Threat", "Description", "Source", and a placeholder
+    column for "Relevant Annex A Control" to be filled in the mitigation step.
+  agent: risk_assessment_agent
+
+identify_vulnerabilities_task:
+  description: >
+    Identify vulnerabilities associated with each asset or supporting asset,
+    referencing vulnerability databases, system_context.risk_register, and operational/process weaknesses.
+  expected_output: >
+    A table with "Asset", "Vulnerability", "Root Cause", "Existing Controls",
+    and "Candidate Annex A Control".
+  agent: risk_assessment_agent
+
+calculate_likelihood_impact_task:
+  description: >
+    Using the defined criteria, estimate likelihood and impact for each
+    asset/threat/vulnerability combination. Provide rationale referencing data
+    sources or assumptions, and cite whether system_context data influenced your
+    ratings.
+  expected_output: >
+    A table listing "Asset", "Threat", "Vulnerability", "Likelihood",
+    "Impact", "Notes", and "Relevant Annex A Control" (derived via the
+    knowledge retriever).
+  agent: risk_assessment_agent
+
+generate_risk_register_task:
+  description: >
+    Compile the previous findings into a coherent risk register, calculate risk
+    scores, assign qualitative levels, and highlight top risks requiring
+    treatment. Ensure each entry references the shared system_context so other
+    agents can trace dependencies.
+  expected_output: >
+    A Markdown table with columns "Asset", "Threat", "Vulnerability",
+    "Likelihood", "Impact", "Risk Score", "Risk Level", "Relevant Annex A
+    Control", and "Mitigation Recommendation". Include a narrative describing
+    how each recommendation ties to the control, e.g., "Risk: Unauthorized
+    database access -> A.8.2 Privileged Access Management -> Implement RBAC and
+    privileged monitoring."
+  agent: risk_assessment_agent
+  output_file: outputs/risk_register.md
+
+evaluate_risks_task:
+  description: >
+    Review the completed risk register and determine which risks require
+    treatment, noting any dependencies, compliance obligations, or business
+    priorities that influence decisions. Cross-reference system_context.risk_register.
+  expected_output: >
+    A brief narrative plus a checklist of top risks with rationale for their
+    treatment priority.
+  agent: risk_treatment_agent
+
+decide_treatment_strategy_task:
+  description: >
+    For each prioritized risk, decide whether to Mitigate, Transfer, Accept, or
+    Avoid, referencing ISO 27001 guidance, system_context.risk_treatment_plan,
+    and stakeholder tolerance.
+  expected_output: >
+    A table with "Risk ID", "Risk Description", "Strategy", and "Justification"
+    columns.
+  agent: risk_treatment_agent
+
+map_risks_to_controls_task:
+  description: >
+    Map each risk to the most relevant ISO 27001 Annex A controls and note any
+    control gaps, grounding decisions in system_context policies and prior
+    mitigation plans.
+  expected_output: >
+    A table listing "Risk ID", "Selected Control", "Control Description",
+    "Gap/Notes".
+  agent: risk_treatment_agent
+
+generate_risk_treatment_plan_task:
+  description: >
+    Produce the full risk treatment plan including owners and timelines for the
+    selected strategies. Update or build upon entries already tracked in
+    system_context.risk_treatment_plan.
+  expected_output: >
+    A Markdown table with "Risk ID", "Selected Control", "Treatment Strategy",
+    "Responsible Owner", "Implementation Timeline" and a brief narrative on
+    monitoring and follow-up.
+  agent: risk_treatment_agent
+  output_file: outputs/risk_treatment_plan.md
+
+generate_policies_task:
+  description: >
+    Using the risk treatment plan, organizational structure, and compliance
+    requirements, draft the required ISO 27001 policies (Access Control, Backup,
+    Cryptographic Controls, Supplier Security, Mobile Device, Remote Working,
+    Incident Response, Change Management) using the specified structure. Consult
+    system_context.policies to ensure alignment with existing drafts.
+  expected_output: >
+    A Markdown document where each policy has the headings: Purpose, Scope,
+    Policy Statement, Roles and Responsibilities, Compliance and Enforcement.
+    Save the compiled document under outputs/policies/ for downstream agents.
+  agent: policy_writer_agent
+  output_file: outputs/policies/security_policies.md
+
+align_policies_with_risk_treatment_task:
+  description: >
+    Ensure each policy explicitly addresses the risks and treatments identified
+    earlier by referencing relevant Annex A controls and risk IDs, incorporating
+    ties back to system_context.risk_treatment_plan.
+  expected_output: >
+    A table mapping "Policy", "Risk ID", "Annex A Control", "Alignment Notes".
+  agent: policy_writer_agent
+
+ensure_policy_compliance_task:
+  description: >
+    Validate that the policies meet ISO 27001/27002 requirements, highlight any
+    remaining gaps, and provide implementation guidance. Note any dependencies
+    on system_context.policies or treatment items.
+  expected_output: >
+    A short narrative plus a checklist of compliance considerations for each
+    policy.
+  agent: policy_writer_agent
+
+evaluate_controls_task:
+  description: >
+    Review policies, the risk register, and the risk treatment plan to evaluate
+    which ISO 27001 Annex A controls are implemented or planned, referencing the
+    shared system_context for authoritative status.
+  expected_output: >
+    A narrative summary plus a checklist noting implemented controls, evidence,
+    and any concerns.
+  agent: compliance_auditor_agent
+
+determine_control_applicability_task:
+  description: >
+    Decide which Annex A controls are applicable to the ISMS scope, providing
+    justification for both applicable and non-applicable controls. Incorporate
+    insights from system_context.asset_register, policies, and risk treatments.
+  expected_output: >
+    A table with columns "Control ID", "Control Description", "Applicable",
+    "Justification".
+  agent: compliance_auditor_agent
+
+generate_statement_of_applicability_task:
+  description: >
+    Produce the Statement of Applicability by evaluating every Annex A control,
+    noting whether it is applicable, the justification, implementation status,
+    and supporting evidence. Use the knowledge retriever to pull control
+    descriptions.
+  expected_output: >
+    A Markdown table listing "Control_ID", "Control_Name", "Applicable",
+    "Justification", "Implementation_Status", "Evidence". Example entry:
+    `A.8.1 User Endpoint Devices | Yes | Employees use laptops and mobile
+    devices. | Implemented | Mobile Device Policy`
+  agent: compliance_auditor_agent
+  output_file: outputs/statement_of_applicability.md
+
+identify_missing_controls_task:
+  description: >
+    Highlight control gaps or areas where implementation evidence is lacking,
+    referencing the risk treatment plan and policies stored in system_context.
+  expected_output: >
+    A bullet list of missing controls with recommended next steps.
+  agent: compliance_auditor_agent
+
+collect_agent_outputs_task:
+  description: >
+    Gather all outputs produced by previous agents (context analysis, asset
+    register, risk register, treatment plan, policies, SoA) and normalize their
+    formatting for final packaging, ensuring alignment with system_context.
+  expected_output: >
+    A structured outline summarizing available documents with references to file
+    names or sections under outputs/ (e.g., outputs/asset_register.md,
+    outputs/risk_register.md, outputs/risk_treatment_plan.md,
+    outputs/statement_of_applicability.md, outputs/policies/security_policies.md).
+  agent: documentation_agent
+
+generate_final_documentation_task:
+  description: >
+    Compile the ISO 27001 readiness report, asset register, risk register,
+    policy compendium, and Statement of Applicability into a cohesive Markdown
+    package.
+  expected_output: >
+    A Markdown bundle (single document) with clear headings for each artifact
+    and links or anchors to detailed sections.
+  agent: documentation_agent
+  output_file: outputs/iso27001_readiness_report.md
+
+ensure_audit_ready_task:
+  description: >
+    Review the compiled documentation for completeness, formatting consistency,
+    and audit readiness. Highlight any remaining documentation gaps and update
+    system_context as needed for future runs.
+  expected_output: >
+    A checklist confirming each required artifact plus notes on outstanding
+    actions before an ISO 27001 audit.
+  agent: documentation_agent
+
+readiness_review_task:
+  description: >
+    Compile all agent outputs into the final ISO 27001 readiness report and
+    ensure cross-references between the asset register, risk register, treatment
+    plan, policies, and Statement of Applicability are intact.
+  expected_output: >
+    A Markdown document saved to outputs/iso27001_readiness_report.md with sections covering ISMS Scope,
+    Organizational Context, Interested Parties, Management System Processes,
+    Information Asset Register, Risk Register Summary, Risk Treatment Plan,
+    Policy Overview, Statement of Applicability, Documentation Readiness, and
+    Next Actions.
+  agent: documentation_agent

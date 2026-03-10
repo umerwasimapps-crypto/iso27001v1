@@ -1,0 +1,66 @@
+{
+  "asset_register": {
+    "summary": "Initial asset inventory covering data platforms, collaboration tools, and physical devices.",
+    "entries": [
+      {
+        "asset_name": "Customer Data Warehouse",
+        "asset_type": "Structured data platform",
+        "owner": "Data Engineering",
+        "classification": "Confidential",
+        "business_importance": "High"
+      },
+      {
+        "asset_name": "Employee Laptops",
+        "asset_type": "Endpoint devices",
+        "owner": "IT Operations",
+        "classification": "Internal",
+        "business_importance": "High"
+      }
+    ]
+  },
+  "risk_register": {
+    "summary": "Seed risks identified during readiness analysis. Unauthorized DB access and unencrypted backups remain the top focus.",
+    "entries": [
+      {
+        "risk": "Unauthorized database access",
+        "likelihood": "Medium",
+        "impact": "High",
+        "existing_controls": ["MFA", "Network segmentation"],
+        "relevant_controls": ["A.8.2"]
+      },
+      {
+        "risk": "Loss of backup media",
+        "likelihood": "Low",
+        "impact": "High",
+        "existing_controls": ["Encrypted backup storage"],
+        "relevant_controls": ["A.8.12"]
+      }
+    ]
+  },
+  "policies": {
+    "summary": "Draft versions of Access Control, Backup, Mobile Device, and Incident Response policies.",
+    "links": {
+      "Access Control Policy": "policies/access_control.md",
+      "Backup Policy": "policies/backup_policy.md",
+      "Mobile Device Policy": "policies/mobile_device_policy.md",
+      "Incident Response Policy": "policies/incident_response.md"
+    }
+  },
+  "risk_treatment_plan": {
+    "summary": "Pending approval. Prioritizes privileged access hardening and encryption upgrades.",
+    "workstreams": [
+      {
+        "name": "Privileged Access Management",
+        "owner": "Security Operations",
+        "target_date": "2024-08",
+        "controls": ["A.8.2"]
+      },
+      {
+        "name": "Backup Hardening",
+        "owner": "Infrastructure",
+        "target_date": "2024-07",
+        "controls": ["A.8.12"]
+      }
+    ]
+  }
+}

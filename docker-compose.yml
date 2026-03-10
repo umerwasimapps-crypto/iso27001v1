@@ -1,0 +1,32 @@
+version: "3.9"
+services:
+  iso27001-crew:
+    build: .
+    image: iso27001-crew:latest
+    env_file:
+      - .env
+    volumes:
+      - ./outputs:/app/outputs
+      - ./vector_db:/app/vector_db
+      - ./knowledge_base:/app/knowledge_base
+      - ./memory:/app/memory
+      - ./policies:/app/policies
+    command: ["uv", "run", "crewai", "run"]
+    stdin_open: true
+    tty: true
+
+  iso27001-control-api:
+    build: .
+    image: iso27001-control:latest
+    command: ["uv", "run", "uvicorn", "guide.control_api:app", "--host", "0.0.0.0", "--port", "5050"]
+    env_file:
+      - .env
+    ports:
+      - "5050:5050"
+    volumes:
+      - ./outputs:/app/outputs
+      - ./vector_db:/app/vector_db
+      - ./knowledge_base:/app/knowledge_base
+      - ./memory:/app/memory
+      - ./policies:/app/policies
+      - ./guide:/app/guide

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ISO27001 Control Center</title>
+  <link rel="stylesheet" href="control_center.css" />
+</head>
+<body>
+  <header>
+    <h1>ISO27001 Control Center</h1>
+    <p>Provide inputs, upload knowledge, run the RAG builder, and monitor each agent’s progress from a single page.</p>
+  </header>
+
+  <main>
+    <section class="panel full-width">
+      <h2>Readiness Checklist</h2>
+      <div id="readiness-table" class="readiness-table"></div>
+      <button id="refresh-readiness">Refresh Readiness</button>
+    </section>
+
+    <section class="panel">
+      <h2>1. Environment Variables</h2>
+      <form id="env-form">
+        <label>HUGGINGFACE_EMBEDDING_MODEL
+          <input type="text" name="HUGGINGFACE_EMBEDDING_MODEL" value="BAAI/bge-m3" required />
+        </label>
+        <label>OPENAI_API_KEY
+          <input type="text" name="OPENAI_API_KEY" placeholder="sk-..." />
+        </label>
+        <label>OPENAI_BASE_URL
+          <input type="text" name="OPENAI_BASE_URL" placeholder="https://api.example.com" />
+        </label>
+        <label>OPENAI_MODEL_NAME
+          <input type="text" name="OPENAI_MODEL_NAME" placeholder="glm-4.5-flash" />
+        </label>
+        <button type="submit">Save .env</button>
+        <p class="status" id="env-status"></p>
+      </form>
+      <div class="actions">
+        <button id="load-demo" class="secondary">Load Demo Inputs</button>
+        <span id="demo-status" class="status"></span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>2. Shared System Context</h2>
+      <textarea id="system-context" rows="12">{
+  "asset_register": {"summary": "Update with live data"},
+  "risk_register": {"summary": "Update with live data"},
+  "policies": {"summary": "Update with live data"},
+  "risk_treatment_plan": {"summary": "Update with live data"}
+}</textarea>
+      <div class="actions">
+        <button id="save-context">Save Context</button>
+        <span id="context-status" class="status"></span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>3. Add Knowledge (Markdown)</h2>
+      <form id="knowledge-form">
+        <label>File name
+          <input type="text" name="filename" placeholder="custom_guidance.md" required />
+        </label>
+        <label>Content
+          <textarea name="content" rows="8" placeholder="# Heading\nAdd ISO guidance or control notes here." required></textarea>
+        </label>
+        <button type="submit">Save to knowledge_base/</button>
+        <p class="status" id="knowledge-status"></p>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>4. Build RAG & Run Crew</h2>
+      <div class="actions">
+        <button id="run-rag">Rebuild RAG</button>
+        <button id="run-crew" class="primary">Run Crew</button>
+        <button id="stop-process" class="danger">Stop</button>
+      </div>
+      <pre id="command-output" class="console">Waiting for commands...</pre>
+    </section>
+
+    <section class="panel">
+      <h2>5. Agent Progress</h2>
+      <div id="progress-grid" class="progress-grid"></div>
+      <button id="refresh-progress">Refresh Progress</button>
+    </section>
+
+    <section class="panel">
+      <h2>6. Generated Outputs</h2>
+      <ul id="outputs-list"></ul>
+      <button id="refresh-outputs">Refresh Outputs</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>Run <code>uv run uvicorn guide.control_api:app --reload --port 5050</code> to start the API before using this UI.</p>
+  </footer>
+
+  <script src="control_center.js"></script>
+</body>
+</html>
